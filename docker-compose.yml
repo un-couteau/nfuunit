@@ -31,6 +31,9 @@ services:
     networks:
       - ibridge
 
+    environment:
+      - POSTGRES_DB=postgresql_db
+
     container_name: postgres_db
 
   nginx:
