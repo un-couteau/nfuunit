@@ -1,0 +1,40 @@
+#file: noinspection YAMLSchemaValidation
+version: '3.9'
+networks:
+  ibridge:
+    driver: "bridge"
+
+services:
+  django:
+    build: .src/app
+    command: python manage.py runserver
+
+    volumes:
+      - .src/app:/app
+
+    ports:
+      - "8000:8000"
+    networks:
+      - ibridge
+
+    container_name: app
+    depends_on: psql
+
+
+  psql:
+    image: postgres:14.11
+    volumes:
+      - .docker/shared/psql:/var/lib/postgresql/data/
+
+    ports:
+      - "5432:5432"
+    networks:
+      - ibridge
+
+    container_name: postgres_db
+
+  nginx:
+    image: nginx:1.25.4
+
+    volumes:
+      - .docker/shared/nginx_log:/var/log/nginx
