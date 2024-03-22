@@ -6,11 +6,11 @@ networks:
 
 services:
   django:
-    build: .src/app
+    build: ./src/app
     command: python manage.py runserver
 
     volumes:
-      - .src/app:/app
+      - ./src/app:/app
 
     ports:
       - "8000:8000"
@@ -22,9 +22,9 @@ services:
 
 
   psql:
-    image: postgres:14.11
+    image: docker.io/postgres:14.11
     volumes:
-      - .docker/shared/psql:/var/lib/postgresql/data/
+      - ./docker/shared/psql:/var/lib/postgresql/data/
 
     ports:
       - "5432:5432"
@@ -37,7 +37,14 @@ services:
     container_name: postgres_db
 
   nginx:
-    image: nginx:1.25.4
+    image: docker.io/nginx:1.25.4
 
     volumes:
-      - .docker/shared/nginx_log:/var/log/nginx
+      - ./docker/shared/nginx_log:/var/log/nginx
+
+    networks:
+      - ibridge
+    ports:
+      - "80:8000"
+
+    depends_on: django
