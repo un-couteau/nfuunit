@@ -1,5 +1,5 @@
-init: docker-pull docker-build docker-up node-init backend-init frontend-init
-down: backend-clear frontend-clear
+init: docker-pull docker-build docker-up
+down: docker-down
 restart: down init
 
 
