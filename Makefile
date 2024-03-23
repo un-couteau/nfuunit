@@ -18,3 +18,6 @@ container-pull:
 
 container-build:
 	$(CONTAINER_TOOL)-compose build
+
+app-migrate:
+	$(CONTAINER_TOOL) exec -it app /bin/bash -c "python manage.py makemigrations && python manage.py migrate"
