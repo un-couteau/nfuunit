@@ -1,0 +1,24 @@
+{% load static %}
+<nav>
+    <a class="logo" href="{% url 'main' %}">
+        <img src="{% static 'image/uunit.svg' %}">
+    </a>
+    <button class="navbar-toggler" type="button" onclick="openNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Университет</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'education' %}">Образование</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'science' %}">Наука</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'library' %}">Библиотека</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'entrant' %}">Поступление</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'students' %}">Студентам</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'additional_education' %}">Дополнительное
+                образование</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://epb.uust.ru">Правовая база</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'history' %}">История</a></li>
+        </ul>
+    </div>
+</nav>

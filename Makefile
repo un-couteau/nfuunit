@@ -1,16 +1,20 @@
-init: docker-pull docker-build docker-up
-down: docker-down
+CONTAINER_TOOL := $(if $(filter $(CONTAINER),docker),docker,podman)
+
+
+start: container-up
+down: container-down
 restart: down init
+init: container-pull container-build container-up
 
 
-docker-up:
-	docker-compose up -d
+container-up:
+	$(CONTAINER_TOOL)-compose up -d
 
-docker-down:
-	docker-compose down --remove-orphans
+container-down:
+	$(CONTAINER_TOOL)-compose down --remove-orphans
 
-docker-pull:
-	docker-compose pull
+container-pull:
+	$(CONTAINER_TOOL)-compose pull
 
-docker-build:
-	docker-compose build
+container-build:
+	$(CONTAINER_TOOL)-compose build

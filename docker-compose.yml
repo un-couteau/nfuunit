@@ -4,10 +4,28 @@ networks:
   ibridge:
     driver: "bridge"
 
+
 services:
+  psql:
+    image: docker.io/postgres:14.11
+    volumes:
+      - ./docker/shared/postgresql:/var/lib/postgresql/data/
+      - ./docker/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+    ports:
+      - "5432:5432"
+    networks:
+      - ibridge
+
+    env_file:
+      - config.env
+
+    container_name: db
+
+
   django:
-    build: ./src/app
-    command: python manage.py runserver
+    build: ./src
+    command: "python manage.py runserver 0.0.0.0:8000"
 
     volumes:
       - ./src/app:/app
@@ -18,33 +36,21 @@ services:
       - ibridge
 
     container_name: app
-    depends_on: psql
 
 
-  psql:
-    image: docker.io/postgres:14.11
-    volumes:
-      - ./docker/shared/psql:/var/lib/postgresql/data/
 
-    ports:
-      - "5432:5432"
-    networks:
-      - ibridge
 
-    environment:
-      - POSTGRES_DB=postgresql_db
+#  nginx:
+#    build: ./docker/nginx
+#
+#    volumes:
+#      - ./docker/shared/nginx_log:/var/log/nginx
+#
+#    networks:
+#      - ibridge
+#    ports:
+#      - "1337:80"
+#
+#    container_name: nginx-gateway
 
-    container_name: postgres_db
-
-  nginx:
-    image: docker.io/nginx:1.25.4
-
-    volumes:
-      - ./docker/shared/nginx_log:/var/log/nginx
-
-    networks:
-      - ibridge
-    ports:
-      - "80:8000"
-
-    depends_on: django
+#    depends_on: django

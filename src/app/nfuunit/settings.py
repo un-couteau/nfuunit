@@ -25,21 +25,23 @@ SECRET_KEY = 'django-insecure-#vsbe(n#c=)odcug!htj)m*egz$xpgvj_t6-#hux=!s^q$z#gm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "pc.lan"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'db',
+    # 'auth',
+    # 'api',
+    'pages',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'test',
-    'pages'
 ]
 
 MIDDLEWARE = [
@@ -76,13 +78,19 @@ WSGI_APPLICATION = 'nfuunit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
