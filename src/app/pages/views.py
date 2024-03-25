@@ -1,7 +1,15 @@
 from django.shortcuts import render
 
+from db.models import Page, PageItemList
 
-# Create your views here.
+def index(request):
+    pages = Page.objects.all()
+    pages_item_list = PageItemList.objects.all()
+    page_items_with_pages = [{
+        'page_item': page_item,
+        'has_pages': pages.filter(item_id=page_item.id).exists()
+    } for page_item in pages_item_list]
+    return render(request, 'main/index.html', {'pages': pages, 'page_items_with_pages': page_items_with_pages})
 
 def main(request):
     return render(request, 'main/main.html')

@@ -1,24 +1,46 @@
 {% load static %}
-<nav>
-    <a class="logo" href="{% url 'main' %}">
-        <img src="{% static 'image/uunit.svg' %}">
+
+<nav class=" navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img src="{% static 'image/uust.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
     </a>
-    <button class="navbar-toggler" type="button" onclick="openNav()">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Университет</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'education' %}">Образование</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'science' %}">Наука</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'library' %}">Библиотека</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'entrant' %}">Поступление</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'students' %}">Студентам</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'additional_education' %}">Дополнительное
-                образование</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://epb.uust.ru">Правовая база</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'history' %}">История</a></li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% for item in page_items_with_pages %}
+                {% if item.has_pages %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"
+                           id="navbarDropdown{{ item.page_item.id }}" role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ item.page_item.value }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ item.page_item.id }}">
+                            {% for page in pages %}
+                                {% if page.item_id == item.page_item.id %}
+                                    <a class="dropdown-item" href="#">{{ page.title }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ item.page_item.value }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        </form>
     </div>
 </nav>
+
