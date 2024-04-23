@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
-    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js.js' %}"></script>
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
     <script src="{% static 'js/navigation.js' %}"></script>
 
 
@@ -20,7 +19,7 @@
 <body>
 <header>
     {% block nav %}
-        {% include 'base/header.html' %}
+        {% include 'base/_nav.html' %}
     {% endblock %}
 </header>
 {% block content %}

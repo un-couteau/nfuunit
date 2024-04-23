@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from db.models import PageItemList, Page, PageContent
+from db.models import NavMenu, Page, PageContent
 
 
-class PageItemListSerializer(serializers.ModelSerializer):
+class NavMenuSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PageItemList
+        model = NavMenu
         fields = '__all__'
 
 

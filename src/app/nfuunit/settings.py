@@ -32,11 +32,11 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "pc.lan"]
 
 INSTALLED_APPS = [
     'db',
-    # 'auth',
     'api',
     'pages',
 
     'rest_framework',
+    'django_extensions',
 
     'django.contrib.admin',
     'django.contrib.auth',

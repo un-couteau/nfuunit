@@ -37,20 +37,22 @@ services:
 
     container_name: app
 
-
-
-
-#  nginx:
-#    build: ./docker/nginx
-#
+#  redis:
+#    image: docker.io/redis:7.2.4
 #    volumes:
-#      - ./docker/shared/nginx_log:/var/log/nginx
-#
-#    networks:
-#      - ibridge
-#    ports:
-#      - "1337:80"
-#
-#    container_name: nginx-gateway
+#      - ./docker/redis
 
-#    depends_on: django
+
+  nginx:
+    build: ./docker/nginx
+
+    volumes:
+      - ./docker/shared/nginx_log:/var/log/nginx
+
+    networks:
+      - ibridge
+    ports:
+      - "1337:80"
+
+    container_name: nginx-gateway
+    depends_on: django

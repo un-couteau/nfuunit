@@ -1,46 +1,52 @@
 {% load static %}
 
-<nav class=" navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">
-        <img src="{% static 'image/uust.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class=" navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'image/uust.svg' %}" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            {% for item in page_items_with_pages %}
-                {% if item.has_pages %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"
-                           id="navbarDropdown{{ item.page_item.id }}" role="button"
-                           data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            {{ item.page_item.value }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ item.page_item.id }}">
-                            {% for page in pages %}
-                                {% if page.item_id == item.page_item.id %}
-                                    <a class="dropdown-item" href="#">{{ page.title }}</a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{ item.page_item.value }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% for item in nav_menu_items %}
+                    {% if item.has_pages %}
+                        <li class="nav-item dropdown">
+                            <div class="btn-group">
+                                <a class="btn btn-secondary" href="/{{ item.slug }}">
+                                    {{ item.value }}
+                                </a>
+                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                                        id="navbarDropdown{{ item.id }}" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ item.id }}">
+                                    {% for page in pages %}
+                                        {% if page.item_id == item.id %}
+                                            <a class="dropdown-item"
+                                               href="/{{ item.slug }}/{{ page.slug }}/">{{ page.title }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/{{ item.slug }}/">{{ item.value }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+            </form>
+        </div>
 
-
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-        </form>
-    </div>
-</nav>
-
+    </nav>
+</div>
