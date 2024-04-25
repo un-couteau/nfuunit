@@ -22,6 +22,15 @@
         {% include 'base/_nav.html' %}
     {% endblock %}
 </header>
+<div class="breadcrumbs">
+    {% if current_path and current_path.0.value is not None %}
+        {% for path_item in current_path %}
+            <span>{{ path_item.value }}</span> {% if not forloop.last %} >> {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+
 {% block content %}
 
 {% endblock %}
