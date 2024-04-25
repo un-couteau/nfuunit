@@ -29,7 +29,7 @@
                                     {% for page in pages %}
                                         {% if page.item_id == item.id %}
                                             <a class="dropdown-item"
-                                               href="/{{ item.slug }}/{{ page.slug }}/">{{ page.title }}</a>
+                                               href="/{{ item.slug }}/{{ page.slug }}/">{{ page.value }}</a>
                                         {% endif %}
                                     {% endfor %}
                                 </div>

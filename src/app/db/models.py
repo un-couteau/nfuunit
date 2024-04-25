@@ -13,7 +13,7 @@ class NavMenu(models.Model): # главы для навигационного м
 
 
 class Page(models.Model): # страница, привязанная к slug навигационного меню, описывает заголовок и содержимое
-    title = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='title', allow_unicode=True, unique=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,7 +25,7 @@ class Page(models.Model): # страница, привязанная к slug н�
 
 
 class PageContent(models.Model):
-    title = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.ForeignKey(Page, on_delete=models.CASCADE, null=True, blank=True)

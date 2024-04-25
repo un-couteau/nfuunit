@@ -16,22 +16,18 @@ def get_table(request):
 
 
 def get_breadcrumbs(request):
-    current_path = request.get_full_path()
-    path_parts = current_path.strip('/').split('/')
-
-    path_with_values = []
-
-    for slug in path_parts:
+    path_parts = [part for part in request.get_full_path().strip('/').split('/') if part]
+    breadcrumbs = []
+    for part in path_parts:
+        # Query the database to find the matching NavMenu or Page by slug
         try:
-            nav_menu_item = NavMenu.objects.get(slug=slug)
-            path_with_values.append({
-                'slug': slug,
-                'value': nav_menu_item.value
-            })
+            nav_menu_item = NavMenu.objects.get(slug=part)
+            breadcrumbs.append({'slug': nav_menu_item.slug, 'value': nav_menu_item.value})
         except NavMenu.DoesNotExist:
-            path_with_values.append({
-                'slug': slug,
-                'value': None
-            })
-
-    return {'current_path': path_with_values}
+            try:
+                page_item = Page.objects.get(slug=part)
+                breadcrumbs.append({'slug': page_item.slug, 'value': page_item.value})
+            except Page.DoesNotExist:
+                # If no matching slug found, append a placeholder or handle accordingly
+                breadcrumbs.append({'slug': part, 'value': part})  # Используйте part как значение, если не найдено в БД
+    return {'breadcrumbs': breadcrumbs}

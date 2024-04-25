@@ -23,12 +23,18 @@
     {% endblock %}
 </header>
 <div class="breadcrumbs">
-    {% if current_path and current_path.0.value is not None %}
-        {% for path_item in current_path %}
-            <span>{{ path_item.value }}</span> {% if not forloop.last %} >> {% endif %}
+    {% if breadcrumbs %}
+        {% for crumb in breadcrumbs %}
+            {% if forloop.last %}
+                <span>{{ crumb.value }}</span>
+            {% else %}
+                <a href="/{{ crumb.slug }}">{{ crumb.value }}</a> &gt;&gt;
+            {% endif %}
         {% endfor %}
     {% endif %}
 </div>
+
+
 
 
 {% block content %}
