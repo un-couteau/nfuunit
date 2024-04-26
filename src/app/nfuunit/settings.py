@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_extensions',
+    'view_breadcrumbs',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,9 +71,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                'pages.context_processors.get_table',
-                'pages.context_processors.get_breadcrumbs',
             ],
         },
     },

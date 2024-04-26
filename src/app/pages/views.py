@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from db.models import PageContent, Page
+from django.shortcuts import render
 
 
 def home(request):

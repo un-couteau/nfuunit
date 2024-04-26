@@ -19,29 +19,17 @@
 <body>
 <header>
     {% block nav %}
-        {% include 'base/_nav.html' %}
+        {% include 'base/navmenu.html' %}
     {% endblock %}
+
+
 </header>
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    {% if breadcrumbs %}
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                {% for crumb in breadcrumbs %}
-                    {% if forloop.last %}
-                        <li class="breadcrumb-item active" aria-current="page">{{ crumb.value }}</li>
-                    {% else %}
-                        <li class="breadcrumb-item">
-                            <a href="/{{ crumb.slug }}">{{ crumb.value }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ol>
-        </nav>
-    {% endif %}
-</nav>
+{% load view_breadcrumbs %}
+{% block breadcrumbs %}
+    {% include 'base/breadcrumbs.html' %}
+{% endblock %}
 
 {% block content %}
-
 {% endblock %}
 </body>
 </html>
