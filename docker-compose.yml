@@ -11,22 +11,18 @@ services:
     volumes:
       - ./docker/shared/postgresql:/var/lib/postgresql/data/
       - ./docker/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-
     ports:
       - "5432:5432"
     networks:
       - ibridge
-
     env_file:
       - config.env
-
     container_name: db
 
 
   django:
     build: ./src
     command: "python manage.py runserver 0.0.0.0:8000"
-
     volumes:
       - ./src/app:/app
 
@@ -34,25 +30,17 @@ services:
       - "8000:8000"
     networks:
       - ibridge
-
+    env_file:
+      - config.env
     container_name: app
 
-#  redis:
-#    image: docker.io/redis:7.2.4
-#    volumes:
-#      - ./docker/redis
-
-
-  nginx:
-    build: ./docker/nginx
-
-    volumes:
-      - ./docker/shared/nginx_log:/var/log/nginx
-
-    networks:
-      - ibridge
+  redis:
+    image: docker.io/redis:7.2.4
+    restart: always
     ports:
-      - "1337:80"
-
-    container_name: nginx-gateway
-    depends_on: django
+      - "6379:6379"
+    volumes:
+      - ./docker/shared/redis:/root/redis
+    env_file:
+      - config.env
+    container_name: cache
