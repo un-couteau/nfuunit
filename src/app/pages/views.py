@@ -1,3 +1,5 @@
+from db.models import Page, SubPage
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 
 
@@ -6,8 +8,13 @@ def home(request):
 
 
 def page(request, page_slug):
-    return render(request, 'main/page.html')
+    page = get_object_or_404(Page, slug=page_slug)
+    context = {'page': page}
+    return render(request, 'main/index.html', context)
 
 
-def content(request, page_slug, content_slug):
-    return render(request, 'main/content.html')
+def subpage(request, page_slug, subpage_slug):
+    subpage = get_object_or_404(SubPage, slug=subpage_slug)
+    context = {'page': subpage}
+
+    return render(request, 'main/index.html', context)
