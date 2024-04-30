@@ -58,14 +58,16 @@
     <nav>
         <div class="container">
             <ol>
-                {% for breadcrumb in breadcrumbs %}
+                {% if breadcrumbs %}
                     <li><a href="/">Главная</a></li>
-                    {% if forloop.last %}
-                        <li>{{ breadcrumb.title }}</li>
-                    {% else %}
-                        <li><a href="/{{ breadcrumb.slug }}">{{ breadcrumb.title }}</a></li>
-                    {% endif %}
-                {% endfor %}
+                    {% for breadcrumb in breadcrumbs %}
+                        {% if forloop.last %}
+                            <li>{{ breadcrumb.title }}</li>
+                        {% else %}
+                            <li><a href="/{{ breadcrumb.slug }}">{{ breadcrumb.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </ol>
         </div>
     </nav>
