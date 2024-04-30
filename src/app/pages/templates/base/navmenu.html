@@ -59,6 +59,7 @@
         <div class="container">
             <ol>
                 {% for breadcrumb in breadcrumbs %}
+                    <li><a href="/">Главная</a></li>
                     {% if forloop.last %}
                         <li>{{ breadcrumb.title }}</li>
                     {% else %}
