@@ -27,8 +27,8 @@
             <div class="blog-pagination">
                 <ul class="justify-content-center">
                     {% if page_obj.has_previous %}
-                        <li><a href="?page=1">&laquo; первая</a></li>
-                        <li><a href="?page={{ page_obj.previous_page_number }}">предыдущая</a></li>
+                        <li><a href="?page=1" title="первая"><i class="bi bi-chevron-double-left"></i></a></li>
+                        <li><a href="?page={{ page_obj.previous_page_number }}" title="предыдщая"><i class="bi bi-chevron-left"></i></a></li>
                     {% endif %}
 
                     <!-- Текущая страница и диапазон страниц -->
@@ -43,8 +43,8 @@
                     {% endfor %}
 
                     {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}">следующая</a></li>
-                        <li><a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a></li>
+                        <li><a href="?page={{ page_obj.next_page_number }}" title="следующая"><i class="bi bi-chevron-right"></i></a></li>
+                        <li><a href="?page={{ page_obj.paginator.num_pages }}" title="последняя"><i class="bi bi-chevron-double-right"></i></a></li>
                     {% endif %}
                 </ul>
             </div><!-- End blog pagination -->
