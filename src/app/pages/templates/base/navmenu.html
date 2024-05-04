@@ -11,6 +11,7 @@
 
         <div class="social-links d-none d-md-flex align-items-center">
             <a href="https://vk.com/nfuunit" class="vk"><i class="fa fa-vk"></i></a>
+            <a href="https://cabinet.nfuunit.ru" class="lk"><i class="bi bi-chat-left-text"></i></a>
             <a href="https://t.me/nfuunit" class="telegram"><i class="bi bi-telegram"></i></a>
         </div>
     </div>
@@ -34,7 +35,7 @@
                             </a>
                             <ul>
                                 {% for subpage in page.has_pages %}
-                                    <li><a href="/{{ page.slug }}/{{ subpage.slug }}">{{ subpage.title }}</a></li>
+                                    <li><a href="/{{ page.slug }}/{{ subpage.slug }}">{{ subpage.title }}<i class="bi bi-chevron-double-right"></i></a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -54,21 +55,34 @@
 <!-- End Header -->
 
 <!-- ======= Breadcrumbs ======= -->
-<div class="breadcrumbs">
-    <nav>
-        <div class="container">
-            <ol>
-                {% if breadcrumbs %}
+{% if breadcrumbs and breadcrumbs.0.slug != '/' %}
+    <div class="breadcrumbs">
+        <nav>
+            <div class="container">
+                <ol>
                     <li><a href="/">Главная</a></li>
                     {% for breadcrumb in breadcrumbs %}
-                        {% if forloop.last %}
-                            <li>{{ breadcrumb.title }}</li>
+                        {% if breadcrumb.slug == 'news' %}
+                            {% if forloop.last %}
+                                <li>Новости</li>
+                            {% else %}
+                                <li><a href="/news">Новости</a></li>
+                            {% endif %}
                         {% else %}
-                            <li><a href="/{{ breadcrumb.slug }}">{{ breadcrumb.title }}</a></li>
+                            {% if forloop.last %}
+                                <li>{{ breadcrumb.title }}</li>
+                            {% else %}
+                                <li><a href="/{{ breadcrumb.slug }}">{{ breadcrumb.title }}</a></li>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
-                {% endif %}
-            </ol>
-        </div>
-    </nav>
-    <!-- End Breadcrumbs -->
+                </ol>
+            </div>
+        </nav>
+    </div>
+{% endif %}
+
+
+
+
+<!-- End Breadcrumbs -->

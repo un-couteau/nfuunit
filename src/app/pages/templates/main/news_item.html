@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <section id="blog" class="blog">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row g-5">
+
+                    <div class="col-lg-8">
+
+                        <article class="blog-details">
+
+                            <div class="post-img">
+                                <img src="{{ news_detail.image.url }}" alt="" class="img-fluid">
+                            </div>
+
+                            <h2 class="title">{{ news_detail.title }}</h2>
+
+                            <div class="meta-top">
+                                <ul>
+                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
+                                        <time datetime="{{ news_detail.created_at|date:"Y-m-d" }}">{{ news_detail.created_at|date:"d M, Y" }}</time>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="content">
+                                {{ news_detail.text|safe }}
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

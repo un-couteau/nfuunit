@@ -18,6 +18,10 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Страница'
+        verbose_name_plural = 'Страницы'
+
 
 class SubPage(models.Model):
     title = models.CharField(max_length=100, unique=True, verbose_name='Заголовок/SLUG')
@@ -27,3 +31,21 @@ class SubPage(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'Подстраница'
+        verbose_name_plural = 'Подстраницы'
+
+
+class News(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
+    image = models.ImageField(upload_to='news_images/', verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'

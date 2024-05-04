@@ -9,7 +9,7 @@ services:
   psql:
     image: docker.io/postgres:14.11
     volumes:
-      - ./docker/shared/postgresql:/var/lib/postgresql/data/
+      - ./docker/shared/postgresql:/var/lib/postgresql/data
       - ./docker/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"

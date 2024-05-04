@@ -1,6 +1,7 @@
 from db.models import Page, SubPage
 from django.db.models import Exists, OuterRef
 
+
 def navmenu(request):
     pages = Page.objects.annotate(has_subpages=Exists(SubPage.objects.filter(page=OuterRef('pk'))))
 
@@ -27,12 +28,12 @@ def breadcrumbs(request):
     path = request.path_info.strip('/')
     path_parts = path.split('/')
     breadcrumbs_list = []
-    url = '/'
+    url = ''
 
     for part in path_parts:
         if not part:
             continue
-        url += f'{part}/'
+        url += part
 
         try:
             page = Page.objects.filter(slug=part).first()
@@ -46,6 +47,6 @@ def breadcrumbs(request):
                     title = part.capitalize()
         except (Page.DoesNotExist, SubPage.DoesNotExist):
             title = part.capitalize()
-        breadcrumbs_list.append({'title': title, 'url': url})
+        breadcrumbs_list.append({'title': title, 'slug': url})
 
     return {'breadcrumbs': breadcrumbs_list}

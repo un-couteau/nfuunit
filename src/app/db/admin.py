@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Page, SubPage
+from .models import Page, SubPage, News
 
 
 @admin.register(Page)
@@ -19,3 +19,12 @@ class SubPageAdmin(admin.ModelAdmin):
     class Meta:
         verbose_name = 'Страница'
         verbose_name_plural = 'Страницы'
+
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'text')
+    search_fields = ('title', 'text',)
+    list_filter = ('title',)
+    ordering = ('-id',)
+

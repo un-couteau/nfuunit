@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    {% load static %}
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            <div class="row gy-4 posts-list">
+                <!-- Здесь мы используем 'page_obj.object_list' для перебора новостей на странице -->
+                {% for news_item in page_obj.object_list %}
+                    <div class="col-xl-4 col-md-6">
+                        <article>
+                            <div class="post-img">
+                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="img-fluid">
+                            </div>
+                            <h2 class="title">
+                                <a href="{% url 'news_item' news_item.pk %}">{{ news_item.title }}</a>
+                            </h2>
+                            <div class="post-content">
+                                {{ news_item.text|truncatewords:30 }}
+                            </div>
+                        </article>
+                    </div><!-- End post list item -->
+                {% endfor %}
+            </div><!-- End blog posts list -->
+
+            <!-- Пагинация -->
+            <div class="blog-pagination">
+                <ul class="justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page=1">&laquo; первая</a></li>
+                        <li><a href="?page={{ page_obj.previous_page_number }}">предыдущая</a></li>
+                    {% endif %}
+
+                    <!-- Текущая страница и диапазон страниц -->
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            {% if page_obj.number == num %}
+                                <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}">следующая</a></li>
+                        <li><a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div><!-- End blog pagination -->
+
+    </section><!-- End Blog Section -->
+
+
+{% endblock %}

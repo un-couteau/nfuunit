@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    {% load static %}
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="{% static 'video/main_nfuunit.MOV' %}" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="container" data-aos="fade-up">
+        <section id="blog" class="blog">
+            <div class="section-header">
+                <h2><a href="{% url 'news' %}">Новости</a></h2>
+            </div>
+            <p></p>
+            <div class="row gy-4 posts-list">
+                {% for news_item in news_list %}
+                    <div class="col-xl-4 col-md-6">
+                        <article>
+                            <div class="post-img">
+                                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="img-fluid">
+                            </div>
+
+                            <h2 class="title">
+                                <a href="{% url 'news_item' news_item.pk %}">{{ news_item.title }}</a>
+                            </h2>
+
+                            <div class="post-content">
+                                {{ news_item.text|truncatewords:30 }}
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="post-meta meta-top">
+                                    <p class="post-date">
+                                        <i class="bi bi-clock"></i>
+                                        <time datetime="{{ news_item.created_at|date:'Y-m-d' }}">{{ news_item.created_at|date:"d M, Y" }}</time>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div><!-- End post list item -->
+                {% endfor %}
+            </div><!-- End blog posts list -->
+        </section><!-- End Blog Section -->
+    </div>
+
+
+{% endblock %}
