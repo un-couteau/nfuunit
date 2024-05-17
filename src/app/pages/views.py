@@ -25,12 +25,6 @@ def news_item(request, pk):
     return render(request, 'main/news_item.html', {'news_detail': news_detail})
 
 
-# def news(request):
-#     news_list = Paginator(News.objects.all(), 9)
-#     num_page = request.GET.get('page', 1)
-#     page_obj = news_list.get_page(num_page)
-#     return render(request, 'main/news.html', {'news_list': news_list})
-
 
 def page(request, page_slug):
     page = get_object_or_404(Page, slug=page_slug)
@@ -38,8 +32,20 @@ def page(request, page_slug):
     return render(request, 'main/index.html', context)
 
 
-def subpage(request, page_slug, subpage_slug):
-    subpage = get_object_or_404(SubPage, slug=subpage_slug)
-    context = {'page': subpage}
 
+def subpage(request, page_slug, subpage_slug):
+    subpage = get_object_or_404(SubPage, slug=subpage_slug, page__slug=page_slug)
+    context = {'subpage': subpage}
+    return render(request, 'main/index.html', context)
+
+
+def subsubpage(request, page_slug, subpage_slug, subsubpage_slug):
+    subsubpage = get_object_or_404(SubPage, slug=subsubpage_slug, parent__slug=subpage_slug, parent__page__slug=page_slug)
+    context = {'subpage': subsubpage}
+    return render(request, 'main/index.html', context)
+
+
+def subsubsubpage(request, page_slug, subpage_slug, subsubpage_slug, subsubsubpage_slug):
+    subsubsubpage = get_object_or_404(SubPage, slug=subsubsubpage_slug, parent__slug=subsubpage_slug, parent__parent__slug=subpage_slug, parent__parent__page__slug=page_slug)
+    context = {'subpage': subsubsubpage}
     return render(request, 'main/index.html', context)

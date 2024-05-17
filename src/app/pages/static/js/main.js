@@ -19,16 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // dropdownToggles.forEach(el => {
-    //     el.addEventListener('click', (event) => {
-    //         let dropdownMenu = el.nextElementSibling;
-    //         dropdownMenu.classList.toggle('dropdown-active'); // Переключить видимость подменю
-    //
-    //         let dropDownIndicator = el.querySelector('.dropdown-indicator');
-    //         dropDownIndicator.classList.toggle('bi-chevron-up');
-    //         dropDownIndicator.classList.toggle('bi-chevron-down');
-    //     });
-    // });
     /**
      * Sticky Header on Scroll
      */
@@ -75,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('load', navbarlinksActive);
     document.addEventListener('scroll', navbarlinksActive);
-
     /**
      * Mobile nav toggle
      */
@@ -116,21 +105,67 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Toggle mobile nav dropdowns
      */
-    const navDropdowns = document.querySelectorAll('.navbar .dropdown > a');
 
-    navDropdowns.forEach(el => {
-        el.addEventListener('click', function (event) {
-            if (document.querySelector('.mobile-nav-active')) {
-                event.preventDefault();
-                this.classList.toggle('active');
-                this.nextElementSibling.classList.toggle('dropdown-active');
+    const dropdowns = document.querySelectorAll('.navbar .dropdown'); // 123
 
-                let dropDownIndicator = this.querySelector('.dropdown-indicator');
-                dropDownIndicator.classList.toggle('bi-chevron-up');
-                dropDownIndicator.classList.toggle('bi-chevron-down');
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('a');
+        const subMenu = dropdown.querySelector('ul');
+
+        // Создаем кнопку для управления подменю
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dropdown-toggle';
+        button.innerHTML = '<i class="bi bi-chevron-down dropdown-indicator"></i>';
+
+        // Вставляем кнопку после ссылки
+        link.after(button);
+
+        // Обработчик клика на кнопку для переключения подменю
+        button.addEventListener('click', (event) => {
+            const isActive = subMenu.classList.contains('dropdown-active');
+            // Закрываем все открытые подменю
+            document.querySelectorAll('.navbar .dropdown ul').forEach(menu => {
+                menu.classList.remove('dropdown-active');
+                menu.previousElementSibling.classList.remove('active');
+            });
+            // Переключаем текущее подменю
+            if (!isActive) {
+                subMenu.classList.add('dropdown-active');
+                button.classList.add('active');
             }
-        })
+        });
     });
+
+    /**
+     * Close dropdowns when clicking outside
+     */
+    document.addEventListener('click', (event) => {
+        if (!event.target.matches('.dropdown-toggle') && !event.target.matches('.dropdown-toggle *')) {
+            document.querySelectorAll('.navbar .dropdown ul').forEach(menu => {
+                menu.classList.remove('dropdown-active');
+            });
+            document.querySelectorAll('.navbar .dropdown .dropdown-toggle').forEach(button => {
+                button.classList.remove('active');
+            });
+        }
+    }); // 123
+
+    // const navDropdowns = document.querySelectorAll('.navbar .dropdown > a');
+
+    // navDropdowns.forEach(el => {
+    //     el.addEventListener('click', function (event) {
+    //         if (document.querySelector('.mobile-nav-active')) {
+    //             event.preventDefault();
+    //             this.classList.toggle('active');
+    //             this.nextElementSibling.classList.toggle('dropdown-active');
+    //
+    //             let dropDownIndicator = this.querySelector('.dropdown-indicator');
+    //             dropDownIndicator.classList.toggle('bi-chevron-up');
+    //             dropDownIndicator.classList.toggle('bi-chevron-down');
+    //         }
+    //     })
+    // });
 
     /**
      * Initiate glightbox

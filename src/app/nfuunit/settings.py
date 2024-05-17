@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 'django_browser_reload',
     'watchman',
     'django_ckeditor_5',
+    'mptt',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -188,6 +189,11 @@ CKEDITOR_5_CONFIGS = {
 
     },
     'extends': {
+        "htmlSupport": {
+            "allow": [
+                {"name": "/.*/", "attributes": True, "classes": True, "styles": True}
+            ]
+        },
         'blockToolbar': [
             'paragraph', 'heading1', 'heading2', 'heading3',
             '|',

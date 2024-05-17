@@ -1,4 +1,4 @@
-from db.models import Page, SubPage
+from db.models import Page, SubPage, News
 from django.db.models import Exists, OuterRef
 
 
@@ -30,10 +30,32 @@ def breadcrumbs(request):
     breadcrumbs_list = []
     url = ''
 
+    news_found = False
+
     for part in path_parts:
         if not part:
             continue
+        if url:
+            url += '/'  # Добавляем слэш перед каждой частью пути, кроме первой
         url += part
+
+        if part == 'news':
+            title = 'Новости'
+            breadcrumbs_list.append({'title': title, 'slug': url})
+            if len(path_parts) > path_parts.index(part) + 1:
+                next_part = path_parts[path_parts.index(part) + 1]
+                if next_part.isdigit():
+                    try:
+                        news_item = News.objects.get(pk=next_part)
+                        title = news_item.title
+                        url += '/' + next_part
+                        breadcrumbs_list.append({'title': title, 'slug': url})
+                    except News.DoesNotExist:
+                        title = "Статья"
+                    break
+                break
+            else:
+                break
 
         try:
             page = Page.objects.filter(slug=part).first()

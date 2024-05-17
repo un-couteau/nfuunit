@@ -5,7 +5,6 @@
     <section id="blog" class="blog">
         <div class="container" data-aos="fade-up">
             <div class="row gy-4 posts-list">
-                <!-- Здесь мы используем 'page_obj.object_list' для перебора новостей на странице -->
                 {% for news_item in page_obj.object_list %}
                     <div class="col-xl-4 col-md-6">
                         <article>

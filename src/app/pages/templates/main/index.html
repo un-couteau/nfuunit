@@ -3,7 +3,10 @@
 {% block content %}
     {% load static %}
     <div class="container" data-aos="fade-up">
-
-    {{ page.content|safe }}
+    {% if page %}
+        {{ page.content|safe }}
+    {% else %}
+        {{ subpage.content|safe }}
+    {% endif %}
     </div>
 {% endblock %}

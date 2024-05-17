@@ -487,10 +487,18 @@ section {
     border-radius: 4px;
   }
 
-  .navbar .dropdown ul li {
+  .navbar {
     min-width: 200px;
+
   }
 
+  @media (max-width: 767px) {
+    .dropdown ul li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
   .navbar .dropdown ul a {
     padding: 10px 20px;
     font-size: 15px;

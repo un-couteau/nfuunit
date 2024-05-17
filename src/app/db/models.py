@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from django_extensions.db.fields import AutoSlugField
+from mptt.models import MPTTModel, TreeForeignKey
 from pytils.translit import slugify
 
 
@@ -23,12 +24,12 @@ class Page(models.Model):
         verbose_name_plural = 'Страницы'
 
 
-class SubPage(models.Model):
-    title = models.CharField(max_length=100, unique=True, verbose_name='Заголовок/SLUG')
+class SubPage(MPTTModel):
+    title = models.CharField(max_length=250, unique=True, verbose_name='Заголовок/SLUG')
     slug = AutoSlugField(populate_from=get_slug_from_title, unique=True, blank=True, overwrite=True)
     content = CKEditor5Field(verbose_name='Содержимое', config_name='extends')
-    page = models.ForeignKey(Page, on_delete=models.CASCADE, verbose_name='Страница', related_name='subpages')
-
+    page = models.ForeignKey(Page, on_delete=models.CASCADE, verbose_name='Страница', related_name='subpages', null=True, blank=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, verbose_name='Родительская подстраница', related_name='children', null=True, blank=True)
     def __str__(self):
         return self.title
 
@@ -37,8 +38,10 @@ class SubPage(models.Model):
         verbose_name_plural = 'Подстраницы'
 
 
+
 class News(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
+    slug = AutoSlugField(populate_from=get_slug_from_title, unique=True, blank=True, overwrite=True)
     image = models.ImageField(upload_to='news_images/', verbose_name='Изображение')
     text = models.TextField(verbose_name='Текст')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')

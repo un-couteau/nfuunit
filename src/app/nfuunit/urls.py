@@ -23,7 +23,9 @@ urlpatterns = [
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
+    path('api/', include('api.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
+
     # path("__reload__/", include("django_browser_reload.urls")),
     # re_path(r'^watchman/', include('watchman.urls')),
 
